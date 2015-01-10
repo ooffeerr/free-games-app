@@ -1,0 +1,66 @@
+package com.zlango.workerService;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
+
+public class TestRequest extends BaseRequest
+{
+
+    protected static String TAG = "TEST_REQUEST";
+    
+    public TestRequest(Parcel parcel)
+    {
+        super(parcel);
+    }
+
+    public TestRequest()
+    {
+        super();
+    }
+
+    @Override
+    public void doRequest(Context context)
+    {
+        try
+        {
+            Thread.sleep(500);
+        }
+        catch (InterruptedException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    
+        
+    @Override
+    public void onStart(Context context)
+    {
+        Log.v(TAG, "Starting test request");
+    }
+
+    @Override
+    public Bundle onFinish(Context context)
+    {
+        Log.v(TAG, "Ending test request");
+		return new Bundle();
+    }
+    
+    public static final Parcelable.Creator<TestRequest> CREATOR = new Parcelable.Creator<TestRequest>() 
+    {
+        @Override
+        public TestRequest createFromParcel(Parcel in) {
+            return new TestRequest(in); 
+        }
+ 
+        @Override
+        public TestRequest[] newArray(int size) {
+            return new TestRequest[size];
+        }
+    };
+}

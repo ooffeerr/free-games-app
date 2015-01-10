@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/ZlangoRepo/!svn/ver/57093/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService
+END
+HttpGetBinaryRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/ZlangoRepo/!svn/ver/55441/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/HttpGetBinaryRequest.java
+END
+NetworkManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/ZlangoRepo/!svn/ver/55961/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/NetworkManager.java
+END
+BaseRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/ZlangoRepo/!svn/ver/55441/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/BaseRequest.java
+END
+TestRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/ZlangoRepo/!svn/ver/55441/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/TestRequest.java
+END
+HttpPostWorkerRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/ZlangoRepo/!svn/ver/57075/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/HttpPostWorkerRequest.java
+END
+HttpWorkerBinaryResponse.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/ZlangoRepo/!svn/ver/55441/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/HttpWorkerBinaryResponse.java
+END
+HttpWorkerResponse.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/ZlangoRepo/!svn/ver/57075/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/HttpWorkerResponse.java
+END
+WorkerService.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/ZlangoRepo/!svn/ver/55441/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/WorkerService.java
+END
+HttpGetFileWorkerRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/ZlangoRepo/!svn/ver/57093/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/HttpGetFileWorkerRequest.java
+END
+FBRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/ZlangoRepo/!svn/ver/57075/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/FBRequest.java
+END
+HttpGetWorkerRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/ZlangoRepo/!svn/ver/57075/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/HttpGetWorkerRequest.java
+END
+TestResponse.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/ZlangoRepo/!svn/ver/55441/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/TestResponse.java
+END
+BaseResponse.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/ZlangoRepo/!svn/ver/57075/GSMClient/trunk/Android/Zlandroid_A2.2/src/com/zlango/workerService/BaseResponse.java
+END

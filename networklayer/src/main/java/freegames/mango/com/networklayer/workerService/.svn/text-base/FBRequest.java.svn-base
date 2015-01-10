@@ -1,0 +1,86 @@
+package com.zlango.workerService;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.facebook.android.Facebook;
+import com.zlango.util.facebook.FacebookFactory;
+
+/**
+ * @author ofers
+ * a request that does some facebook operation using the fbconnect APIs
+ */
+public class FBRequest extends BaseRequest {
+
+    Facebook mFaceBook;
+    private String mMessage;
+    private String mPath;
+    Bundle mParams;
+    private int mStatusCode;
+    
+    public FBRequest(String graphPath, int type, Bundle bundle)
+    {
+        mRequestType = type;
+        mPath = graphPath;
+        mParams = bundle;
+    }
+    
+    public FBRequest(Parcel parcel) {
+        super(parcel);
+        mRequestType = parcel.readInt();
+        mPath = parcel.readString();
+        mParams = parcel.readBundle();
+    }
+    
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(mRequestType);
+        dest.writeString(mPath);
+        dest.writeBundle(mParams);
+    }
+    
+    
+    @Override
+    public void onStart(Context context) {
+        mFaceBook = FacebookFactory.getInstance();
+    }
+
+    @Override
+    public void doRequest(Context context) {
+        try {
+            mMessage = mFaceBook.request(mPath, mParams, "POST");
+            mStatusCode = 200;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            mMessage = e.getMessage();
+            mStatusCode = NetworkManager.REQUEST_STATUS_NO_CONNECTIVITY;
+        }
+    }
+
+    @Override
+    public Bundle onFinish(Context context) {
+        HttpWorkerResponse response = new HttpWorkerResponse(mStatusCode, mMessage, mRequestType, mExtras, null);
+        Bundle result = new Bundle();
+        result.putParcelable(NetworkManager.RESPONSE_EXTRA, response);
+        return result;
+    }
+
+    public static final Parcelable.Creator<FBRequest> CREATOR = new Parcelable.Creator<FBRequest>() 
+    {
+        @Override
+        public FBRequest createFromParcel(Parcel in) {
+            return new FBRequest(in); 
+        }
+ 
+        @Override
+        public FBRequest[] newArray(int size) {
+            return new FBRequest[size];
+        }
+    };
+
+}

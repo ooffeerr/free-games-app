@@ -1,0 +1,135 @@
+package com.zlango.workerService;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ConnectException;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.zlango.mms.LogTag;
+
+/**
+ * @author ofers
+ * an Http get request to be run by the worker service.
+ */
+public class HttpGetWorkerRequest extends BaseRequest
+{
+	private static final String TAG = "HttpGetWorkerRequest";
+	String mUrl;
+//	Bundle mParams;
+	protected String mMessage;
+	protected int mStatusCode = -1;
+	
+    public HttpGetWorkerRequest(Parcel parcel) 
+    {
+        super(parcel);
+        mUrl = parcel.readString();
+        mRequestType = parcel.readInt();
+    }
+    
+	@Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        super.writeToParcel(dest, flags);
+        dest.writeString(mUrl);
+        dest.writeInt(mRequestType);
+    }
+    
+    public HttpGetWorkerRequest(String commandStr, int type)
+	{
+    	mRequestType = type;
+		mUrl = commandStr;
+	}
+
+
+	@Override
+	public void onStart(Context context)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doRequest(Context context)
+	{
+		try
+		{
+	        HttpParams httpParameters = new BasicHttpParams();
+	        // Set the timeout in milliseconds until a connection is established.
+	        int timeoutConnection = BASE_CONNECTION_TIMEOUT;
+	        HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+	        // Set the default socket timeout (SO_TIMEOUT) 
+	        // in milliseconds which is the timeout for waiting for data.
+	        int timeoutSocket = BASE_CONNECTION_TIMEOUT;
+	        HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+
+			HttpClient client = new DefaultHttpClient(httpParameters);
+			HttpGet httpget = new HttpGet(mUrl);
+			HttpResponse response = client.execute(httpget);
+			mStatusCode = response.getStatusLine().getStatusCode();
+			
+			
+			BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+			StringBuffer sb = new StringBuffer("");
+			String line = "";
+			String NL = System.getProperty("line.separator");
+			while ((line = in.readLine()) != null)
+			{
+				sb.append(line + NL);
+			}
+			in.close();
+			mMessage = sb.toString();
+			LogTag.v(TAG, "http response =", mMessage, "with status =", mStatusCode);
+		}
+		
+		catch (ClientProtocolException e)
+		{
+			mMessage = e.getMessage();
+			LogTag.e(TAG, "doRequest() throws exception:", e.getMessage());
+		}
+		catch (IOException e)
+		{
+		    if (e instanceof ConnectException) 
+                mStatusCode = NetworkManager.REQUEST_STATUS_NO_CONNECTIVITY;
+		    
+			mMessage = e.getMessage();
+			LogTag.e(TAG, "doRequest() throws exception:", e.getMessage());
+		}
+	}
+
+	@Override
+	public Bundle onFinish(Context context)
+	{
+		HttpWorkerResponse response = new HttpWorkerResponse(mStatusCode, mMessage, mRequestType, mExtras, null);
+        Bundle result = new Bundle();
+        result.putParcelable(NetworkManager.RESPONSE_EXTRA, response);
+        return result;
+	}
+	
+    public static final Parcelable.Creator<HttpGetWorkerRequest> CREATOR = new Parcelable.Creator<HttpGetWorkerRequest>() 
+    {
+        @Override
+        public HttpGetWorkerRequest createFromParcel(Parcel in) {
+            return new HttpGetWorkerRequest(in); 
+        }
+ 
+        @Override
+        public HttpGetWorkerRequest[] newArray(int size) {
+            return new HttpGetWorkerRequest[size];
+        }
+    };
+
+}

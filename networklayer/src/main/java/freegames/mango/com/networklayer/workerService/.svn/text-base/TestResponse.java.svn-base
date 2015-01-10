@@ -1,0 +1,14 @@
+package com.zlango.workerService;
+
+import android.os.Parcel;
+
+public class TestResponse extends BaseResponse
+{
+
+    public TestResponse(Parcel parcel)
+    {
+        super(parcel);
+        // TODO Auto-generated constructor stub
+    }
+
+}
